@@ -62,6 +62,7 @@ JSON / CSV formats
 RESTful API (in progress)
 
 Online address lookup tool (coming soon)
+```
 #使用教程  User Manual 
 -- 示例：查找“广东省”下的所有市 Find all the cities under "Guangdong Province
 SELECT id, name, name_en, admin_code 
@@ -80,6 +81,7 @@ LEFT JOIN
     address AS province ON city.parent_id = province.id
 WHERE
     district.name = '南山区';
+```sql
 
 
     
