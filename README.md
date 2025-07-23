@@ -64,11 +64,13 @@ RESTful API (in progress)
 Online address lookup tool (coming soon)
 ```
 #使用教程  User Manual 
--- 示例：查找“广东省”下的所有市 Find all the cities under "Guangdong Province
+-- 示例：查找“广东省”下的所有市
+--Find all the cities under "Guangdong Province
 SELECT id, name, name_en, admin_code 
 FROM address 
 WHERE parent_id = (SELECT id FROM address WHERE name = '广东省');
--- 示例：查找“南山区”的完整路径  Example: Find the full - path of "Nanshan District
+-- 示例：查找“南山区”的完整路径
+-- Example: Find the full - path of "Nanshan District
 SELECT
     district.name AS '区',
     city.name AS '市',
@@ -82,10 +84,17 @@ LEFT JOIN
 WHERE
     district.name = '南山区';
 
-
-
-
-
+-- 示例：查找“California”州下的所有县和市
+-- Example: Find all the counties and cities under the state of "California"
+WITH RECURSIVE address_tree AS (
+    -- 初始部分：找到顶级节点 (California)
+    SELECT * FROM address WHERE name_en = 'California'
+    UNION ALL
+    -- 递归部分：找到所有子节点
+    SELECT child.* FROM address AS child
+    JOIN address_tree AS parent ON child.parent_id = parent.id
+)
+SELECT * FROM address_tree WHERE name_en != 'California';
 ```
 
 
