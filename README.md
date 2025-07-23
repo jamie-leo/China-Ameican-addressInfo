@@ -62,6 +62,25 @@ JSON / CSV formats
 RESTful API (in progress)
 
 Online address lookup tool (coming soon)
+#使用教程  User Manual 
+-- 示例：查找“广东省”下的所有市 Find all the cities under "Guangdong Province
+SELECT id, name, name_en, admin_code 
+FROM address 
+WHERE parent_id = (SELECT id FROM address WHERE name = '广东省');
+-- 示例：查找“南山区”的完整路径  Example: Find the full - path of "Nanshan District
+SELECT
+    district.name AS '区',
+    city.name AS '市',
+    province.name AS '省'
+FROM
+    address AS district
+LEFT JOIN 
+    address AS city ON district.parent_id = city.id
+LEFT JOIN 
+    address AS province ON city.parent_id = province.id
+WHERE
+    district.name = '南山区';
 
 
+    
 
